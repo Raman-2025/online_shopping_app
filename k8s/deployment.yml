@@ -1,31 +1,30 @@
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
-  name: online-shop
-  namespace: online-shop-prod
-spec:
-  replicas: 3
+  name: shop-deployment
+  namespace: shop-ns
+  labels:
+    app: shop
+spec: 
+  replicas: 2
   selector:
     matchLabels:
-      app: online-shop
+      app: shop
   template:
     metadata:
+      name: shop-pod
       labels:
-        app: online-shop
+        app: shop
     spec:
       containers:
-      - name: online-shop
-        image: online_shop:latest
-        imagePullPolicy: Never
+      - name: shop-app
+        image: raman20260/online_shopping_app:latest
         ports:
-        - containerPort: 80
-        envFrom:
-        - configMapRef:
-            name: online-shop-config
+        - containerPort: 80     
         resources:
           requests:
-            cpu: "100m"
-            memory: "128Mi"
-          limits:
-            cpu: "300m"
-            memory: "256Mi"
+            cpu: 100m
+            memory: 128Mi
+          limits:  
+            cpu: 200m
+            memory: 256Mi
